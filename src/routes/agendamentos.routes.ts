@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     }
     if (!dateRegex.test(data)) {
       return res.status(400).json({
-        message: "Formato de data inválido. Use dd-mm-aaaa, ex: 21-11-2025.",
+        message: "Formato de data inválido. Use dd/mm/aaaa, ex: 21/11/2025.",
       });
     }
     if (!timeRegex.test(hora)) {
