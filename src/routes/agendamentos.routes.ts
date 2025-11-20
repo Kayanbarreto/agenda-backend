@@ -3,7 +3,7 @@ import { prisma } from "../prisma/client";
 
 const router = Router();
 
-const dateRegex = /^([0-2]\d|3[01])\-(0\d|1[0-2])\-\d{4}$/;
+const dateRegex = /^([0-2]\d|3[01])\/(0\d|1[0-2])\/\d{4}$/;
 
 const timeRegex = /^([01]\d|2[0-3]):[0-5]\d$/;
 
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const [diaStr, mesStr, anoStr] = data.split('-');
+    const [diaStr, mesStr, anoStr] = data.split('/');
     const dia = Number(diaStr);
     const mes = Number(mesStr);
     const ano = Number(anoStr);
@@ -69,9 +69,20 @@ router.post("/", async (req, res) => {
 });
 
 /* GET /agendamentos */
-router.get("/", async (_req, res) => {
+router.get('/', async (req, res) => {
   try {
+    const nomeFiltro = req.query.nome as string | undefined;
+
     const agendamentos = await prisma.agendamento.findMany({
+      where: nomeFiltro
+        ? {
+            nome: {
+              contains: nomeFiltro,
+              mode: "insensitive", 
+            },
+          }
+        : undefined,
+
       orderBy: { id: "desc" },
     });
 
