@@ -186,7 +186,7 @@ API disponível em:
 
 ## 🎨 3. Frontend
 
-###🔹 3.1 Entrar na pasta do frontend
+### 🔹 3.1 Entrar na pasta do frontend
 ```
 cd agenda-web
 ```
